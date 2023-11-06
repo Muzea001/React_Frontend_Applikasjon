@@ -11,3 +11,75 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+.centered-text {
+  text-align: center; /* Keep text centered */
+  font-family: 'Arial', sans-serif; /* Use a neat font-family, you can choose any */
+  color: #333; /* Use a color that fits your design */
+  margin: 0; /* Reset margin */
+  padding: 20px 0; /* Add some padding to give space around the text */
+  font-size: 2em; /* Make it larger than normal text */
+  font-weight: bold; /* Make the font bold */
+  background-color: #f8f8f8; /* A light background color */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Optional: add a subtle shadow for depth */
+  border-bottom: 1px solid #ddd; /* Optional: add a border for definition */
+  margin-bottom: 30px; /* Optional: add space below the header */
+}
+
+.centered-content {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+  background-color: #333;
+}
+
+nav a {
+  color: white;
+  padding: 0.5rem;
+  text-decoration: none;
+}
+
+nav a:hover {
+  background-color: #555;
+}
+
+.navbar-right {
+  display: flex;
+}
+
+nav .navbar-right a {
+  margin-left: 10px;
+}
+
+.card {
+  font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif; /* Example font */
+  border: 1px solid #007bff; /* Bootstrap primary color */
+}
+
+.card-title {
+  font-size: 1.25rem; /* Adjust the size as needed */
+  font-weight: 600; /* You might choose a different weight */
+}
+
+.card-text {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #6c757d; /* Bootstrap's default text-muted color */
+}
+
+/* Optional: If you want to make the images smaller */
+.card-img-top {
+  width: 100%; /* Adjust if you want to change the size */
+  object-fit: cover; /* This will cover the aspect ratio of the card image area */
+  height: 180px; /* Adjust the height as needed */
+}
+
+
+

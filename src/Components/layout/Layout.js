@@ -1,0 +1,20 @@
+import React from 'react';
+import Header from './Header';
+import Footer from './Footer';
+import { Outlet } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+const Layout = () => (
+  <>
+    <Header />
+    <div className='bg-dark min-height: 100'> 
+    <main className="centered-content" >
+        <Outlet /> {}
+      
+    </main>
+    <Footer />
+    </div>
+  </>
+);
+
+export default Layout;
