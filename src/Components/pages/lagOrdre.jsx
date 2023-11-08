@@ -2,14 +2,16 @@
 import React, { useEffect, useState, Fragment } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Table from "react-bootstrap/Table"
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet, useParams, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 
 
 
-const LagOrdre = ({ husId, pris }) => {
+const LagOrdre = () => {
+    const {husId, pris} = useParams();
+    const prisNumber = pris ? Number(pris) : 0;
     const [betaltGjennom, setBetaltGjennom] = useState('');
     const [startDato, setStartDato] = useState('');
     const [sluttDato, setSluttDato] = useState('');
@@ -25,13 +27,13 @@ const LagOrdre = ({ husId, pris }) => {
 
 
     const calculateFullPrice = async () => {
-        if (startDato && sluttDato && pris) {
+        if (startDato && sluttDato && prisNumber) {
           try {
             
             const queryParams = new URLSearchParams({
               start: startDato,
               slutt: sluttDato,
-              pris: pris
+              pris: prisNumber
             });
                   const response = await fetch(`http://localhost:11569/api/Ordre/regnFullPris?${queryParams}`);
                         if (!response.ok) {
