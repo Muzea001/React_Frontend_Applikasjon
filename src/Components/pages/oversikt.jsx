@@ -3,110 +3,123 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Table from "react-bootstrap/Table"
 import { Outlet, useParams } from "react-router-dom";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 
 const Oversikt = () => {
 
 
-    const [show, setShow] = useState(false);
-    const {husId} = useParams();
-    const [bildeListe, setBildeListe] = useState([]);
-    const [bildeUrl, setbildeUrl] = useState("");
-    const [pris, setPris] = useState(0);
-    const [beskrivelse, setBeskrivelse] = useState("");
-    const [currentIndex, setcurrentIndex] = useState(0);
-    const [antallrom, setAntallrom] = useState(0);
-    const [areal, setAreal] = useState(0);
-    const [by, setBy]= useState("");
-    const [addresse, setAddresse]= useState("");
-    const [harparkering, setParkering] = useState(false);
-    const [ermoblert, setMoblert] = useState("true");
-    const [loading ,setLoading] = useState("true");
+  const [show, setShow] = useState(false);
+  const { husId } = useParams();
+  const [bildeListe, setBildeListe] = useState([]);
+  const [bilderUrl, setbilderUrl] = useState("");
+  const [pris, setPris] = useState(0);
+  const [beskrivelse, setBeskrivelse] = useState("");
+  const [currentIndex, setcurrentIndex] = useState(0);
+  const [romAntall, setAntallrom] = useState(0);
+  const [areal, setAreal] = useState(0);
+  const [by, setBy] = useState("");
+  const [addresse, setAddresse] = useState("");
+  const [harparkering, setParkering] = useState(false);
+  const [ermoblert, setMoblert] = useState("true");
 
 
 
-    const [houseDetails, setHouseDetails] = useState([]);
+
+  const [houseDetails, setHouseDetails] = useState({});
 
 
-    const showImage = (offset) => {
+  const showImage = (offset) => {
+    const totalImages = bildeListe.length;
+    const newIndex = (currentIndex + offset + totalImages) % totalImages;
+    setcurrentIndex(newIndex);
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:11569/api/Hus/Oversikt/${husId}`);
+        const details = response.data;
+        setHouseDetails(details);
+        setBildeListe(details.bildeListe);
+        setbilderUrl(details.bilderUrl)
+        setPris(details.pris);
+        setBeskrivelse(details.beskrivelse);
+        setAntallrom(details.romAntall);
+        setAreal(details.areal);
+        setBy(details.by);
+        setAddresse(details.addresse);
+        setParkering(details.harparkering);
+        setMoblert(details.ermoblert);
+        console.log('Current image list:', bildeListe);
+        console.log('Current index and image:', currentIndex, bildeListe[currentIndex]);
+      } catch (error) {
+
+      }
+    };
+
+    fetchData();
+  }, [husId]);
+
+  useEffect(() => {
+    console.log('House details from API:', houseDetails);
+  }, [houseDetails]); // This effect runs when `houseDetails` changes.
 
 
-        const newIndex = (currentIndex + offset + bildeUrl.length) % bildeUrl.length
-        setcurrentIndex(newIndex);
+  const navigate = useNavigate();
+
+  const detailClick = (husId, pris) => {
+    console.log('Attempting to navigate with id and price:', husId, pris);
+    try {
+      navigate(`/lagOrdre/${husId}/${pris}`);
+    } catch (error) {
+      console.error('Navigation error:', error);
     }
+  };
 
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const response = await axios.get(`http://localhost:11569/api/Hus/Oversikt/${husId}`);
-            setHouseDetails(response.data);
-          } catch (error) {
-            if (axios.isAxiosError(error)) {
-              console.error("Error fetching data: ", error.message);
-              if (error.response) {
-                console.error("Error response data: ", error.response.data);
-                console.error("Error response status: ", error.response.status);
-              }
-            } else {
-              console.error("An unexpected error occurred: ", error);
-            }
-          } finally {
-            setLoading(false);
-          }
-        };
-      
-        fetchData();
-      }, [husId]); // Dependency array ensures this effect runs when husId changes
-      
-      // After state updates, if you want to log or use the new data, 
-      // it's better to use useEffect that depends on the `houseDetails` state.
-      
-      useEffect(() => {
-        console.log('House details from API:', houseDetails);
-      }, [houseDetails]); // This effect runs when `houseDetails` changes.
+  return (
 
-        return (
+    <Fragment>
+      <section>
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-md-8"> {/* Adjusted to col-md-8 for a larger column */}
+              <div className="card item-card text-center"> {/* Added text-center for centering the image */}
+                <img
+                  id="imageDisplay"
+                  alt={bildeListe[currentIndex]?.bilderUrl || 'Default Image'}
+                  src={bildeListe[currentIndex] ? `http://localhost:11569${bildeListe[currentIndex].bilderUrl}` : '/default-image.jpg'}
+                  className="card-img-top img-fluid mx-auto d-block"
+                  style={{ maxWidth: '100%', height: 'auto' }}
+                />
+                <div className="card-body">
+                  <div className="d-flex justify-content-between">
+                    <button className="btn btn-outline-primary" onClick={() => showImage(-1)}>Previous</button>
+                    <button className="btn btn-outline-primary" onClick={() => showImage(1)}>Next</button>
+                  </div>
+                </div>
+              </div>
 
-            <Fragment>                     
-                <section>
-             <div className="container">
-      <div className="row justify-content-center">
-        <div className="col-md-6">
-          <div className="card item-card">
-            <img
-              id="imageDisplay"
-              alt={bildeListe[currentIndex]?.bilderUrl || 'Default Image'}
-              src={bildeListe[currentIndex]?.bilderUrl || '/default-image.jpg'}
-              className="card-img-top img-fluid"
-              style={{ maxWidth: '300px', maxHeight: '200px' }}
-            />
-            <div className="card-body">
-              <div className="d-flex justify-content-between">
-                <button className="btn btn-outline-primary" onClick={() => showImage(-1)}>Previous</button>
-                <button className="btn btn-outline-primary" onClick={() => showImage(1)}>Next</button>
+              <div className="card mt-3 text-center"> {/* Added text-center class here */}
+                <div className="card-body">
+
+                  <h5 className="card-title">House Details</h5>
+                  {/* Wrap the property names with <strong> tags to make them bold */}
+                  <p className="card-text"><strong>City:</strong> <span className="text-muted">{addresse}</span></p>
+                  <p className="card-text"><strong>Areal:</strong> <span className="text-muted">{areal}</span></p>
+                  <p className="card-text"><strong>City:</strong> <span className="text-muted">{by}</span></p>
+                  <p className="card-text"><strong>Number of Rooms:</strong> <span className="text-muted">{romAntall}</span></p>
+                  <p className="card-text"><strong>Parking:</strong> <span className="text-muted">{harparkering ? 'Yes' : 'No'}</span></p>
+                  <p className="card-text"><strong>Furnishing:</strong> <span className="text-muted">{ermoblert ? 'Yes' : 'No'}</span></p>
+                  <p className="card-text"><strong>Price:</strong> <span className="text-muted">{pris}</span></p>
+                  <p className="card-text"><strong>Description:</strong> <span className="text-muted">{beskrivelse}</span></p>
+                  <button className="btn btn-primary mt-auto" onClick={()=> detailClick(husId, pris)}>Reserve</button>
+                  
+                </div>
               </div>
             </div>
           </div>
-
-          <div className="card mt-3">
-            <div className="card-body">
-              <h5 className="card-title">House Details</h5>
-              <p className="card-text">City: <span className="text-muted">{addresse}</span></p>
-              <p className="card-text">Areal: <span className="text-muted">{areal}</span></p>
-              <p className="card-text">City: <span className="text-muted">{by}</span></p>
-              <p className="card-text">Number of Rooms: <span className="text-muted">{antallrom}</span></p>
-              <p className="card-text">Parking: <span className="text-muted">{harparkering ? 'Yes' : 'No'}</span></p>
-              <p className="card-text">Price: <span className="text-muted">{pris}</span></p>
-              <p className="card-text">Description: <span className="text-muted">{beskrivelse}</span></p>
-              <button className="btn btn-primary" onClick={() => {/* logic to handle reservation */}}>
-                Reserve
-              </button>
-            </div>
-          </div>
         </div>
-      </div>
-    </div>
-    </section>
+      </section>
     </Fragment>
   );
 };
@@ -118,4 +131,3 @@ export default Oversikt
 
 
 
-        

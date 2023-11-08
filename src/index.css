@@ -68,6 +68,10 @@ nav .navbar-right a {
   font-weight: 600; /* You might choose a different weight */
 }
 
+body, .main-content {
+  padding-bottom: 30px; /* Adjust the value based on your footer's height */
+}
+
 .card-text {
   font-size: 1rem;
   line-height: 1.5;
