@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 
 
-const HusTabell = (props) => {
+const KundeTabell = (props) => {
 
 
 
@@ -54,4 +54,4 @@ const HusTabell = (props) => {
 
 }
 
-    export default kundeTabell;
+    export default KundeTabell;
