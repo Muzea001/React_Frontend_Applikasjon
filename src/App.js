@@ -1,18 +1,24 @@
-import React from 'react';
+import React, { useContext , useEffect} from 'react';
+import axios from 'axios';
+import { AuthContext } from './Components/pages/AuthContext';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './Components/layout/Layout';
 import Home from './Components/pages/Home';
-import HusTabell from './Components/pages/husTabell';
+import HusTabell from './Components/pages/Hus/husTabell';
 import KundeTabell from './Components/pages/kunde/kundeTabell';
-import EierTabell from './Components/pages/eierTabell';
-import PersonTabell from './Components/pages/personTabell';
-import OrdreTabell from './Components/pages/ordreTabell';
-import ListHus from './Components/pages/listHus';
-import Oversikt from './Components/pages/oversikt';
-import LagOrdre from './Components/pages/lagOrdre';
+import EierTabell from './Components/pages/Eier/eierTabell';
+import PersonTabell from './Components/pages/Person/personTabell';
+import OrdreTabell from './Components/pages/Ordre/ordreTabell';
+import ListHus from './Components/pages/Hus/listHus';
+import Oversikt from './Components/pages/Hus/oversikt';
+import LagOrdre from './Components/pages/Ordre/lagOrdre';
 import slettKunde from './Components/pages/kunde/slettKunde';
 import Register from './Components/pages/Innlogging/Register';
 import LoggInn from './Components/pages/Innlogging/LoggInn';
+import MyProfile from './Components/pages/Innlogging/myProfile';
+import { AuthProvider } from './Components/pages/AuthContext';
+import MyOrders from './Components/pages/Innlogging/myOrders';
+import MyHouses from './Components/pages/Innlogging/myHouses';
 
 
 
@@ -20,9 +26,13 @@ import LoggInn from './Components/pages/Innlogging/LoggInn';
 const App = () => {
   return (
     <BrowserRouter>
+    <AuthProvider>
   <Routes>
     <Route path="/" element={<Layout />}>
     <Route path="Innlogging/Register" element={<Register />} />
+    <Route path="Innlogging/myOrders" element={<MyOrders />} />
+    <Route path="Innlogging/myHouses" element={<MyHouses />} />
+    <Route path="Innlogging/MyProfile" element={<MyProfile />} />
     <Route path="Innlogging/LoggInn" element={<LoggInn />} />
     <Route path="Innlogging/Register" element={<Register />} />
       <Route index element={<HusTabell type="Grid" />} />
@@ -37,7 +47,10 @@ const App = () => {
       <Route path="listHus" element={<ListHus />} />
     </Route>
   </Routes>
+  </AuthProvider>
+
 </BrowserRouter>
+
   );
 };
 

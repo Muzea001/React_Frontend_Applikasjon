@@ -1,14 +1,15 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
-import Header from "../layout/Header";
+import Header from "../../layout/Header";
 
 
-const OrdreTabell = ()=>{
+const PersonTabell = ()=>{
 
 return (
     <>
+    
     <section>
-        <h1>ordreTabell</h1>
+        <h1>personTabell</h1>
     </section>
     <Outlet></Outlet>
     
@@ -24,4 +25,4 @@ return (
 );
 };
 
-export default OrdreTabell;
+export default PersonTabell;
