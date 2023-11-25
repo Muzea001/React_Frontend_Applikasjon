@@ -24,41 +24,41 @@ const Header = () => (
       <div className="collapse navbar-collapse" id="navbarNav">
         <ul className="navbar-nav me-auto mb-2 mb-lg-0">
           <li className="nav-item">
-            <NavLink className="nav-link" to="/listHus">
+            <NavLink className="nav-link text-white" to="/listHus">
               List House
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link" to="/husTabell">
+            <NavLink className="nav-link text-white" to="/husTabell">
               Houses
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link" to="/kundeTabell">
+            <NavLink className="nav-link text-white" to="/kundeTabell">
               Customers
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link" to="/eierTabell">
+            <NavLink className="nav-link text-white" to="/eierTabell">
               Owners
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link" to="/ordreTabell">
+            <NavLink className="nav-link text-white" to="/ordreTabell">
               Orders
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink className="nav-link" to="/personTabell">
+            <NavLink className="nav-link text-white" to="/personTabell">
               Persons
             </NavLink>
           </li>
         </ul>
         <div className="d-flex">
-          <NavLink className="nav-link" to="/register">
+          <NavLink className="nav-link text-white" to="/Innlogging/Register">
             Register
           </NavLink>
-          <NavLink className="nav-link" to="/login">
+          <NavLink className="nav-link text-white" to="/Innlogging/LoggInn">
             Login
           </NavLink>
         </div>

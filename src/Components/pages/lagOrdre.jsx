@@ -39,9 +39,9 @@ const LagOrdre = () => {
                         if (!response.ok) {
               throw new Error('Network response was not ok');
             }
-                  const data = await response.json();
-            
-            setFullPris(data.fullprice);
+            const data = await response.json();
+            console.log(data); 
+            setFullPris(800 || "");
           } catch (error) {
             console.error('There was a problem with the fetch operation:', error);
           }
@@ -79,7 +79,9 @@ const LagOrdre = () => {
       }, [startDato, sluttDato]);
 
       
-    
+      useEffect(() => {
+        console.log('Component rerendered with fullPris:', fullPris);
+      }, [fullPris]);
 
 
     
@@ -101,7 +103,7 @@ const LagOrdre = () => {
                       id="betaltgjennom"
                       className="form-control"
                       value={betaltGjennom}
-                      onChange={(e) => setBetaltGjennom(e.target.value)}
+                      onChange={(e) => setBetaltGjennom(e.target.value )}
                       required
                     />
                   </div>
@@ -139,12 +141,12 @@ const LagOrdre = () => {
                   <div className="mb-3">
                     <label htmlFor="fullPrice" className="form-label">Full Price</label>
                     <input
-                      type="text"
-                      id="fullPrice"
-                      className="form-control"
-                      value={fullPris}
-                      readOnly
-                    />
+                    type="text"
+                    id="fullPrice"
+                    className="form-control"
+                    value={fullPris} 
+                    readOnly
+                  />
                   </div>
   
                   {submitButtonVisible && (

@@ -27,6 +27,25 @@ code {
   margin-bottom: 30px; /* Optional: add space below the header */
 }
 
+html {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  flex-shrink: 0;
+}
+
 .centered-content {
   width: 80%;
   margin-left: auto;

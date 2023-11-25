@@ -7,13 +7,14 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const Layout = () => (
   <>
     <Header />
-    <div className='bg-dark min-height: 100'> 
+    <div className='bg-dark full-height'> 
     <main className="centered-content" >
         <Outlet /> {}
       
     </main>
-    <Footer />
     </div>
+    <Footer />
+   
   </>
 );
 

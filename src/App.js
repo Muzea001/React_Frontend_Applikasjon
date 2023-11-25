@@ -11,6 +11,9 @@ import ListHus from './Components/pages/listHus';
 import Oversikt from './Components/pages/oversikt';
 import LagOrdre from './Components/pages/lagOrdre';
 import slettKunde from './Components/pages/kunde/slettKunde';
+import Register from './Components/pages/Innlogging/Register';
+import LoggInn from './Components/pages/Innlogging/LoggInn';
+
 
 
 
@@ -19,6 +22,9 @@ const App = () => {
     <BrowserRouter>
   <Routes>
     <Route path="/" element={<Layout />}>
+    <Route path="Innlogging/Register" element={<Register />} />
+    <Route path="Innlogging/LoggInn" element={<LoggInn />} />
+    <Route path="Innlogging/Register" element={<Register />} />
       <Route index element={<HusTabell type="Grid" />} />
       <Route path="husTabell" element={<HusTabell type="Tabell" />} />
       <Route path="oversikt/:husId" element={<Oversikt />} />
