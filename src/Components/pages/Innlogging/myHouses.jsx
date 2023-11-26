@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Table from 'react-bootstrap/Table'; // Make sure to import Table from react-bootstrap
-import { AuthContext } from '../AuthContext';
+import { AuthContext } from '../../../AuthContext';
 
 const MyHouses = () => {
 

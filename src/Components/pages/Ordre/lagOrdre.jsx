@@ -1,15 +1,18 @@
 
-import React, { useEffect, useState, Fragment } from "react";
+import React, { useEffect, useState, Fragment, useContext } from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Table from "react-bootstrap/Table"
 import { Outlet, useParams, useSearchParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from '../../../AuthContext';
 
 
 
 
 const LagOrdre = () => {
+
+    const navigate = useNavigate();
     const {husId, pris} = useParams();
     const prisNumber = pris ? Number(pris) : 0;
     const [betaltGjennom, setBetaltGjennom] = useState('');
@@ -19,10 +22,30 @@ const LagOrdre = () => {
     const [availabilityLabel, setAvailabilityLabel] = useState('');
     const [submitButtonVisible, setSubmitButtonVisible] = useState(false);
     const [availabilityError, setAvailabilityError] = useState('');
-  
-    const handleSubmit = (event) => {
+    const {user} = useContext(AuthContext);
+
+
+    const handleSubmit = async(event) => {
         event.preventDefault();
-        console.log('Form is submitted', { husId, startDato, sluttDato, betaltGjennom, fullPris });
+        const formData = new FormData();
+        formData.append('Pris', pris);
+            formData.append('betaltGjennom', betaltGjennom);
+            formData.append('startDato', startDato);
+            formData.append('sluttDato', sluttDato);
+            formData.append('fullPris', fullPris);
+            
+            const response = await axios.post(`http://localhost:11569/api/Ordre/LagOrdre/${husId}?email=${encodeURIComponent(user.email)}`, formData);
+            if (response.status===200 && response.data.ordreId){
+
+                const ordreId = response.data.ordreId;
+                navigate(`/Kvittering/${ordreId}`)
+
+                
+
+            }
+
+
+
       };
 
 
@@ -87,7 +110,7 @@ const LagOrdre = () => {
     
   
     return (
-        <div className="container mt-4">
+        <div className="container mt-10">
         <div className="row">
           <div className="col-md-8 offset-md-2">
             <div className="card">

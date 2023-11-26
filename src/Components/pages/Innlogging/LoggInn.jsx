@@ -1,19 +1,22 @@
 import React, { useState, useContext } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from '../AuthContext';
+import { AuthContext } from '../../../AuthContext';
 
 const LoggInn = () => {
-  const [error, setError] = useState('');
+  
   const [loginData, setLoginData] = useState({
     email: '',
     password: '',
     rememberMe: false
   });
 
+ 
   const { email, password, rememberMe } = loginData;
+
   const navigate = useNavigate();
   const { setUser } = useContext(AuthContext);
+  const [error, setError] = useState('');
 
   const onChange = e => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
@@ -36,8 +39,7 @@ const LoggInn = () => {
       const response = await axios.post('http://localhost:11569/api/Bruker/LoggInn', body, config);
   
       if (response.status === 200) {
-        // Assuming you don't have the user's name, just set isAuthenticated
-        setUser({email :loginData.email, isAuthenticated: true }); 
+        setUser({ email: email, isAuthenticated: true });
         navigate('/');
       } else {
         setError('Login failed. No response data.');
@@ -48,7 +50,7 @@ const LoggInn = () => {
       setError('Failed to log in. Please check your credentials and try again.');
     }
   };
-  
+
   const registerClick = () => {
     try {
       navigate(`/Innlogging/Register`);

@@ -13,7 +13,9 @@
   }
 }
 
-
+.navbar-item {
+  margin-right: 10px; /* Adjust as needed */
+}
 
 .App-header {
   background-color: #282c34;
@@ -38,6 +40,23 @@ header, footer {
 
 .App-link {
   color: #61dafb;
+}
+
+body {
+  background-color: rgb(52, 58, 64); /* #343a40 in rgb */
+  margin: 0;
+  padding: 0;
+  min-height: 100vh; /* Ensure full viewport height */
+  box-sizing: border-box;
+}
+
+.full-height-container {
+  background-color: #343a40; 
+  min-height: 100vh; 
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 @keyframes App-logo-spin {

@@ -2,12 +2,14 @@
 import { Outlet } from "react-router-dom";
 import Header from "../../layout/Header";
 import axios from "axios";
-import React, { useEffect, useState, Fragment } from "react";
+import React, { useEffect, useState, Fragment, useContext } from "react";
+import { AuthContext } from '../../../AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const ListHus = () => {
-
+    const navigate = useNavigate();
     const [bildeListe, setBildeListe] = useState([]);
     const [bilderUrl, setBilderUrl] = useState("");
     const [pris, setPris] = useState(0);
@@ -19,48 +21,63 @@ const ListHus = () => {
     const [harParkering, setHarParkering] = useState(false);
     const [eierKontoNummer, setEierKontoNummer] = useState(0);
     const [erMoblert, setErMoblert] = useState(true);
+    const {user} = useContext(AuthContext);
+   
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        
         try {
             const formData = new FormData();
-            formData.append('pris', pris);
-            formData.append('beskrivelse', beskrivelse);
+            formData.append('Pris', pris);
+            formData.append('Beskrivelse', beskrivelse);
             formData.append('romAntall', romAntall);
             formData.append('areal', areal);
             formData.append('by', by);
-            formData.append('adresse', adresse);
+            formData.append('Addresse', adresse);
             formData.append('harParkering', harParkering);
             formData.append('erMoblert', erMoblert);
             formData.append('eierKontoNummer', eierKontoNummer)
-            bildeListe.forEach((image) => formData.append('bildeListe', image));
+            bildeListe.forEach((file) => formData.append('bilder', file));
             formData.append('bilderUrl', bilderUrl);
+            formData.append('ordreListe', JSON.stringify([]));
+            
+            for (let [key, value] of formData.entries()) { 
+                console.log(key, value); 
+            }
+            
+            
+            const response = await axios.post(`http://localhost:11569/api/Hus/CreateHouseWithImages?email=${encodeURIComponent(user.email)}`, formData, {});
+            if (response.status===200 && response.data.houseId){
 
-            const response = await axios.post('http://localhost:11569/api/Hus/CreateHouseWithImages', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
+                const houseId = response.data.houseId;
+                navigate(`/oversikt/${houseId}`)
+
+                
+
+            }
             console.log(response.data);
         } catch (error) {
             console.error('There was an error posting the data', error);
         }
+
+        
+
     };
 
     const handleImageUpload = (event) => {
-        const files = Array.from(event.target.files); // Convert to array for easier manipulation
-    
-        // Create URLs for image previews
+        console.log("File Input Changed")
+        const files = Array.from(event.target.files); 
+        console.log("Selected files,", files)
+        
         const newImageUrls = files.map(file => URL.createObjectURL(file));
     
-        // Assuming bilderUrl is meant to hold one URL for preview purposes,
-        // you might want to consider how you want to handle multiple previews.
-        // For now, we will only set the first image URL for preview.
+        
         if (newImageUrls.length > 0) {
             setBilderUrl(newImageUrls[0]);
         }
     
-        // Add the new files to the existing bildeListe
+        
         setBildeListe(prevBildeListe => [...prevBildeListe, ...files]);
     };
 

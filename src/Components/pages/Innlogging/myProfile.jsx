@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import Table from 'react-bootstrap/Table'; 
-import { AuthContext } from '../AuthContext';
+import { AuthContext } from '../../../AuthContext';
 import MyOrders from './myOrders';
 import { NavLink } from 'react-router-dom';
 

@@ -2,11 +2,13 @@ import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Icon from './images/Icon.PNG';
-import { AuthContext } from '../pages/AuthContext';
-
+import { AuthContext } from '../../AuthContext';
+import { logout } from '../../AuthService';
 const Header = () => {
   const { user } = useContext(AuthContext);
-
+  const handleLogout = () => {
+    logout(user);
+  }
   return (
     <header>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -59,23 +61,25 @@ const Header = () => {
               </li>
             </ul>
             <div className="d-flex">
-              {user && user.isAuthenticated ? (
-                <>
-                  <span></span>
-                  <NavLink className="nav-link text-white" to="/Innlogging/MyProfile">
-                    My Profile
-                  </NavLink>
-                </>
-              ) : (
-                <>
-                  <NavLink className="nav-link text-white" to="/Innlogging/Register">
-                    Register
-                  </NavLink>
-                  <NavLink className="nav-link text-white" to="/Innlogging/LoggInn">
-                    Login
-                  </NavLink>
-                </>
-              )}
+            {user && user.isAuthenticated ? (
+    <>
+        <NavLink className="nav-link text-white me-2" to="/Innlogging/MyProfile">
+            My Profile
+        </NavLink>
+        <NavLink className="nav-link text-white me-2" onClick={handleLogout}>
+            Log Out
+        </NavLink>
+    </>
+) : (
+    <>
+        <NavLink className="nav-link text-white me-2" to="/Innlogging/Register">
+            Register
+        </NavLink>
+        <NavLink className="nav-link text-white me-2" to="/Innlogging/LoggInn">
+            Login
+        </NavLink>
+    </>
+)}
             </div>
           </div>
         </div>

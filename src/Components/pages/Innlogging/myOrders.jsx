@@ -2,7 +2,7 @@
   import React, { useState, useEffect, useContext } from 'react';
   import axios from 'axios';
   import Table from 'react-bootstrap/Table'; 
-  import { AuthContext } from '../AuthContext';
+  import { AuthContext } from '../../../AuthContext';
   
   const MyOrders = () => {
     const [orderInfo, setOrderInfo] = useState([]);
@@ -37,6 +37,7 @@
     <thead>
       <tr>
         <th>Order Id</th>
+        <th>House Id</th>
         <th>Paid Through</th>
         <th>Start Date</th>
         <th>Full Price</th>
@@ -48,10 +49,11 @@
       {orderInfo.map((order, index) => (
         <tr key={index}>
           <td>{order.ordreId}</td>
+          <td>{order.hus.husId}</td>
           <td>{order.betaltGjennom}</td>
           <td>{new Date(order.startDato).toLocaleDateString()}</td>
-          <td>{order.fullPris}</td>
           <td>{new Date(order.sluttDato).toLocaleDateString()}</td>
+          <td>{order.fullPris}</td>
           <td>{melding}</td>
           
         </tr>
