@@ -4,10 +4,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Icon from './images/Icon.PNG';
 import { AuthContext } from '../../AuthContext';
 import { logout } from '../../AuthService';
+import { useNavigate } from 'react-router-dom';
 const Header = () => {
   const { user } = useContext(AuthContext);
-  const handleLogout = () => {
-    logout(user);
+  const navigate = useNavigate();
+  const handleLogout = async() => {
+   await  logout(user);
+   navigate('/');
   }
   return (
     <header>

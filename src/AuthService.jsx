@@ -7,7 +7,7 @@ export const logout = async (setUser) => {
         localStorage.removeItem('userToken');
         setUser({ isAuthenticated: false });
         // Redirect to login or home page
-        useNavigate()('/');
+        
     } catch (error) {
         console.error('Logout failed:', error);
         // Optionally handle error (e.g., show a message to the user)
