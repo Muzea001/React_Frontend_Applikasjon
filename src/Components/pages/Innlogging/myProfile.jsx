@@ -29,61 +29,57 @@ const MyProfile = () => {
   
 
   return (
-    <div className="container">
-  <div className="row">
-    <div className="col-md-4">
-      {/* Sidebar with links */}
-      <ul className="list-group">
-        <li className="list-group-item">
-          <NavLink to="/Innlogging/MyProfile">Personalia</NavLink>
-        </li>
-        <li className="list-group-item">
-          <NavLink to="/Innlogging/myOrders">My Orders</NavLink>
-        </li>
-        <li className="list-group-item">
-          <NavLink to="/Innlogging/myHouses">My Houses</NavLink>
-        </li>
-      </ul>
-    </div>
-    <div className="col-md-8"></div>
-    <div className="container">
+    <div className="full-height-container bg-dark">
       <section>
         <h1 className="text-center display-4 py-2 mb-4 bg-dark text-white">Personalia</h1>
-        {loading ? (
-          <p>Loading...</p>
-        ) : userInfo ? (
-          <Table striped hover variant="dark">
-            <tbody>
-              <tr>
-                <td><strong>Name:</strong></td>
-                <td>{userInfo.navn}</td>
-              </tr>
-              <tr>
-                <td><strong>Email:</strong></td>
-                <td>{userInfo.email}</td>
-              </tr>
-              <tr>
-                <td><strong>Address:</strong></td>
-                <td>{userInfo.addresse}</td>
-              </tr>
-              <tr>
-                <td><strong>Phone Number:</strong></td>
-                <td>{userInfo.telefonNummer}</td>
-              </tr>
-              <tr>
-                <td><strong>Birth Date:</strong></td>
-                <td>{userInfo.fodselsdato}</td>
-              </tr>
-            </tbody>
-          </Table>
-        ) : (
-          <p>User information not found.</p>
-        )}
+        <div className="mb-4 p-3" style={{ backgroundColor: '#343a40', borderRadius: '0.25rem' }}> {/* Add styling to match the table */}
+          <div className="d-flex justify-content-center">
+            <NavLink to="/Innlogging/MyProfile" className="list-group-item list-group-item-action list-group-item-info">
+              Personalia
+            </NavLink>
+            <NavLink to="/Innlogging/myOrders" className="list-group-item list-group-item-action list-group-item-info -gd 2">
+              My Orders
+            </NavLink>
+            <NavLink to="/Innlogging/myHouses" className="list-group-item list-group-item-action list-group-item-info">
+              My Houses
+            </NavLink>
+          </div>
+        </div>
+  
+        <div className="container">
+          {loading ? (
+            <p>Loading...</p>
+          ) : userInfo ? (
+            <Table striped hover variant="dark">
+              <tbody>
+                <tr>
+                  <td><strong>Name:</strong></td>
+                  <td>{userInfo.navn}</td>
+                </tr>
+                <tr>
+                  <td><strong>Email:</strong></td>
+                  <td>{userInfo.email}</td>
+                </tr>
+                <tr>
+                  <td><strong>Address:</strong></td>
+                  <td>{userInfo.addresse}</td>
+                </tr>
+                <tr>
+                  <td><strong>Phone Number:</strong></td>
+                  <td>{userInfo.telefonNummer}</td>
+                </tr>
+                <tr>
+                  <td><strong>Birth Date:</strong></td>
+                  <td>{userInfo.fodselsdato}</td>
+                </tr>
+              </tbody>
+            </Table>
+          ) : (
+            <p>User information not found.</p>
+          )}
+        </div>
       </section>
     </div>
-    </div>
-    </div>
   );
-
-        }
+          }
 export default MyProfile;

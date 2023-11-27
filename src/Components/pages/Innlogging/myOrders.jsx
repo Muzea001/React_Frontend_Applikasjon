@@ -3,6 +3,7 @@
   import axios from 'axios';
   import Table from 'react-bootstrap/Table'; 
   import { AuthContext } from '../../../AuthContext';
+  import { NavLink } from 'react-router-dom';
   
   const MyOrders = () => {
     const [orderInfo, setOrderInfo] = useState([]);
@@ -28,8 +29,26 @@
   }, [user, user?.email]);
 
   return (
-    <section>
-  <h1 className="text-center display-4 py-2 mb-4 bg-dark text-white">Mine Ordre</h1>
+
+
+    
+    <div className="full-height-container bg-dark">
+      <h1 className="text-center display-4 py-2 mb-4 bg-dark text-white">Mine Ordre</h1>
+      <section>
+        
+        <div className="mb-4 p-3" style={{ backgroundColor: '#343a40', borderRadius: '0.25rem' }}> {/* Add styling to match the table */}
+          <div className="d-flex justify-content-center">
+            <NavLink to="/Innlogging/MyProfile" className="list-group-item list-group-item-action list-group-item-info">
+              Personalia
+            </NavLink>
+            <NavLink to="/Innlogging/myOrders" className="list-group-item list-group-item-action list-group-item-info -gd 2">
+              My Orders
+            </NavLink>
+            <NavLink to="/Innlogging/myHouses" className="list-group-item list-group-item-action list-group-item-info">
+              My Houses
+            </NavLink>
+          </div>
+        </div>
   {loading ? (
   <p>Loading...</p>
 ) : orderInfo && orderInfo.length > 0 ? (
@@ -64,6 +83,7 @@
   <p>No orders found.</p>
 )}
 </section>
+</div>
 
 
 

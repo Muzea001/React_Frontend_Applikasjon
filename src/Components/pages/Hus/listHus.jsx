@@ -84,7 +84,7 @@ const ListHus = () => {
     return (
         <Fragment>
             <section>
-                <div className="container mt-5">
+                <div className="full-height-container bg-dark">
                     <div className="row justify-content-center">
                         <div className="col-md-6">
                             <h1 className="text-center display-4 py-2 mb-4 bg-dark text-white">List a new House</h1>

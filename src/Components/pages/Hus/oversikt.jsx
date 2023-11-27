@@ -80,7 +80,7 @@ const Oversikt = () => {
 
     <Fragment>
       <section>
-        <div className="container">
+      <div className="full-height-container bg-dark">
           <div className="row justify-content-center">
             <div className="col-md-8"> {/* Adjusted to col-md-8 for a larger column */}
               <div className="card item-card text-center"> {/* Added text-center for centering the image */}

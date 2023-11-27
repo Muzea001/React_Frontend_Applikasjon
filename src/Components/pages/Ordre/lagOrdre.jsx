@@ -64,7 +64,7 @@ const LagOrdre = () => {
             }
             const data = await response.json();
             console.log(data); 
-            setFullPris(800 || "");
+            setFullPris(data || "");
           } catch (error) {
             console.error('There was a problem with the fetch operation:', error);
           }
@@ -110,7 +110,7 @@ const LagOrdre = () => {
     
   
     return (
-        <div className="container mt-10">
+      <div className="full-height-container bg-dark">
         <div className="row">
           <div className="col-md-8 offset-md-2">
             <div className="card">

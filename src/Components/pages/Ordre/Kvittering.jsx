@@ -56,7 +56,7 @@ const navigate = useNavigate();
 
         <Fragment>
         <section>
-            <div className="bg-dark full-height">
+        <div className="full-height-container bg-dark">
             <h1 className="text-center display-4 py-2 mb-4 bg-dark text-white">Receipt</h1>
             <div className="container">
                 <div className="row justify-content-center">

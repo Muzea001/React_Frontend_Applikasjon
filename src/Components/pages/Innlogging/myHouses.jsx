@@ -1,8 +1,9 @@
 
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
-import Table from 'react-bootstrap/Table'; // Make sure to import Table from react-bootstrap
+import Table from 'react-bootstrap/Table'; 
 import { AuthContext } from '../../../AuthContext';
+import { NavLink } from 'react-router-dom';
 
 const MyHouses = () => {
 
@@ -27,8 +28,23 @@ useEffect(() => {
 }, [user, user?.email]);
 
 return (
-  <section>
-<h1 className="text-center display-4 py-2 mb-4 bg-dark text-white">My Houses</h1>
+  <div className="container">
+      <h1 className="text-center display-4 py-2 mb-4 bg-dark text-white">My Houses</h1>
+      <section>
+        
+        <div className="mb-4 p-3" style={{ backgroundColor: '#343a40', borderRadius: '0.25rem' }}> {/* Add styling to match the table */}
+          <div className="d-flex justify-content-center">
+            <NavLink to="/Innlogging/MyProfile" className="list-group-item list-group-item-action list-group-item-info">
+              Personalia
+            </NavLink>
+            <NavLink to="/Innlogging/myOrders" className="list-group-item list-group-item-action list-group-item-info -gd 2">
+              My Orders
+            </NavLink>
+            <NavLink to="/Innlogging/myHouses" className="list-group-item list-group-item-action list-group-item-info">
+              My Houses
+            </NavLink>
+          </div>
+        </div>
 {loading ? (
 <p>Loading...</p>
 ) : houseInfo && houseInfo.length > 0 ? (
@@ -69,6 +85,7 @@ return (
 <p>No Houses found.</p>
 )}
 </section>
+</div>
 );
 };
 export default MyHouses;
