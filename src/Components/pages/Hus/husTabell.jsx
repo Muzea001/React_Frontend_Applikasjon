@@ -29,6 +29,10 @@ const HusTabell = (props) => {
         }
     }
 
+    const handleEditClick = (husId) => {
+        navigate('/endreHus', { state: { husId } }); 
+      };
+
     const handleDeleteClick = (husId) => {
         setSelectedHusId(husId);
         setDeleteErrorMessage('');
@@ -87,7 +91,7 @@ const HusTabell = (props) => {
                                                 )}
                                             </td>
                                             <td>
-                                                <button className="btn btn-primary">Edit</button>
+                                            <button className="btn btn-primary" onClick={() => handleEditClick(item.husId)}>Edit</button>
                                                 <button 
                                                     className="btn btn-danger" 
                                                     onClick={() => handleDeleteClick(item.husId)}>

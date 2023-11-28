@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Modal, Button } from 'react-bootstrap';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const OrdreTabell = () => {
     const [data, setData] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedOrdreId, setSelectedOrdreId] = useState(null);
     const [deleteErrorMessage, setDeleteErrorMessage] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchData();
@@ -20,6 +22,10 @@ const OrdreTabell = () => {
             console.error('Error fetching data: ', error);
         }
     }
+
+    const handleEditClick = (ordreId) => {
+        navigate('/endreOrdre', { state: { ordreId } }); 
+      };
 
     const handleDeleteClick = (ordreId) => {
         setSelectedOrdreId(ordreId);
@@ -77,7 +83,9 @@ const OrdreTabell = () => {
                                         <td>{ordre.hus && ordre.hus.husId}</td>
                                         <td>{ordre.kunde && ordre.kunde.kundeID}</td>
                                         <td>
-                                            <button className="btn btn-primary">Edit</button>
+                                        
+                                        <button className="btn btn-primary" onClick={() => handleEditClick(ordre.ordreId)}>Edit</button>
+                                            
                                             <button 
                                                 className="btn btn-danger" 
                                                 onClick={() => handleDeleteClick(ordre.ordreId)}>

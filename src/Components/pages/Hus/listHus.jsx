@@ -105,8 +105,28 @@ const ListHus = () => {
                                     Amount of rooms
                                 </label>
                                 <div className="mb-3">
-                                    <input type="number" className="form-control" value={romAntall} onChange={(e) => setRomAntall(e.target.value)} />
-                                </div>
+                                <label className="form-check-label text-white" htmlFor="romAntall">
+                                    Number of Rooms
+                                </label>
+                                <input
+                                    type="number"
+                                    id="romAntall"
+                                    className="form-control"
+                                    value={romAntall}
+                                    onChange={(e) => {
+                                        const newValue = parseInt(e.target.value, 10);
+                                        if (newValue >= 0 && newValue <= 20) {
+                                            setRomAntall(newValue);
+                                        } else if (newValue < 0) {
+                                            setRomAntall(0);
+                                        } else if (newValue > 20) {
+                                            setRomAntall(20);
+                                        }
+                                    }}
+                                    min="0"
+                                    max="20"
+                                />
+                            </div>
                                 <label className="form-check-label text-white" htmlFor="romAntall">
                                     Address
                                 </label>

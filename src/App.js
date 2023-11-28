@@ -20,6 +20,8 @@ import { AuthProvider } from './AuthContext';
 import MyOrders from './Components/pages/Innlogging/myOrders';
 import MyHouses from './Components/pages/Innlogging/myHouses';
 import Kvittering from './Components/pages/Ordre/Kvittering';
+import EndreOrdre from './Components/pages/Ordre/endreOrdre';
+import EndreHus from './Components/pages/Hus/endreHus';
 import './App.css'
 
 
@@ -47,6 +49,7 @@ const App = () => {
     <Route path="Innlogging/Register" element={<Register />} />
       <Route index element={<HusTabell type="Grid" />} />
       <Route path="husTabell" element={<HusTabell type="Tabell" />} />
+      <Route path='endreHus' element={<EndreHus/>} />
       <Route path="oversikt/:husId" element={<Oversikt />} />
       <Route path="lagOrdre/:husId/:pris" element={<LagOrdre />} />
       <Route path ="/Kvittering/:ordreId" element={<Kvittering/>}/>
@@ -55,6 +58,7 @@ const App = () => {
       <Route path='/kunde/slettKunde/:husId' element={<slettKunde/>} />
       <Route path="personTabell" element={<PersonTabell />} />
       <Route path="ordreTabell" element={<OrdreTabell />} />
+      <Route path="endreOrdre" element={<EndreOrdre />} />
       <Route path="listHus" element={<ListHus />} />
     </Route>
     
