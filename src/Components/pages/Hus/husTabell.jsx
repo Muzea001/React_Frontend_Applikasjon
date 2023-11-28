@@ -7,31 +7,50 @@ import { useNavigate } from "react-router-dom";
 
 const HusTabell = (props) => {
     const [data, setData] = useState([]);
+    const [filteredData, setFilteredData] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [selectedHusId, setSelectedHusId] = useState(null);
     const [deleteErrorMessage, setDeleteErrorMessage] = useState('');
+    const [priceFilter, setPriceFilter] = useState('');
+    const [cityFilter, setCityFilter] = useState('');
+    const [roomFilter, setRoomFilter] = useState('');
+    const [parkingFilter, setParkingFilter] = useState(false);
+    const [furnishedFilter, setFurnishedFilter] = useState(false);
 
     const navigate = useNavigate();
 
-    const detailClick = (husId) => {
-      navigate(`/oversikt/${husId}`);
-    }
     useEffect(() => {
         fetchData();
     }, []);
+
+    useEffect(() => {
+        const filtered = data.filter(item => {
+            return (priceFilter ? item.pris <= priceFilter : true) &&
+                   (cityFilter ? item.by.toLowerCase().includes(cityFilter.toLowerCase()) : true) &&
+                   (roomFilter ? item.romAntall === parseInt(roomFilter, 10) : true) &&
+                   (!parkingFilter || item.harParkering === parkingFilter) &&
+                   (!furnishedFilter || item.erMoblert === furnishedFilter);
+        });
+        setFilteredData(filtered);
+    }, [data, priceFilter, cityFilter, roomFilter, parkingFilter, furnishedFilter]);
 
     async function fetchData() {
         try {
             const result = await axios.get("http://localhost:11569/api/Hus/Tabell");
             setData(result.data);
+            setFilteredData(result.data); // Initialize filteredData with all data
         } catch (error) {
             console.error('Error fetching data: ', error);
         }
     }
 
+    const detailClick = (husId) => {
+        navigate(`/oversikt/${husId}`);
+    }
+
     const handleEditClick = (husId) => {
         navigate('/endreHus', { state: { husId } }); 
-      };
+    };
 
     const handleDeleteClick = (husId) => {
         setSelectedHusId(husId);
@@ -110,40 +129,127 @@ const HusTabell = (props) => {
                     </section>
                 </Fragment>
                 :
-                <Fragment>                     
-                    <section>
-                        <h1 className="text-center display-4 py-2 mb-4 bg-dark text-white">Your Page Title</h1>
-                        <div className="container">
-                            <div className="row">
-                                {data && data.length > 0 ? (
-                                    data.map((item, index) => (
-                                        <div key={index} className="col-sm-6 col-md-4 col-lg-3 mb-4">
-                                            <div className="card h-100 border-primary">
-                                                {item.bildeListe && item.bildeListe.length > 0 && (
-                                                    <img
-                                                        src={`http://localhost:11569${item.bildeListe[0].bilderUrl}`}
-                                                        className="card-img-top"
-                                                        alt="House"
-                                                    />
-                                                )}
-                                                <div className="card-body d-flex flex-column">
-                                                    <h5 className="card-title">Price: {item.pris}</h5>
-                                                    <p className="card-text">{item.beskrivelse}</p>
-                                                    <button className="btn btn-primary mt-auto" onClick={()=> detailClick(item.husId)}>Details</button>
-                                                    
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <div className="col-12">
-                                        <p className="text-center">No data found...</p>
+                <Fragment>
+    <section>
+    <h1 className="text-center display-4 py-2 mb-4 bg-dark text-white">Welcome</h1>
+    <div className="mb-3 text-center border border-white p-3">
+    <h5 className="text-white mb-4">Filter:</h5>
+    <div className="row justify-content-center">
+        {/* Price Filter */}
+        <div className="col-2">
+            <label className="text-white mb-1">Price</label>
+            <input
+                type="text"
+                className="form-control bg-dark text-white"
+                placeholder="Filter by price..."
+                value={priceFilter}
+                onChange={e => setPriceFilter(e.target.value)}
+            />
+        </div>
+
+        {/* City Filter */}
+        <div className="col-2">
+            <label className="text-white mb-1">City</label>
+            <input
+                type="text"
+                className="form-control bg-dark text-white"
+                placeholder="Filter by city..."
+                value={cityFilter}
+                onChange={e => setCityFilter(e.target.value)}
+            />
+        </div>
+
+        {/* Area (Rooms) Filter */}
+        <div className="col-2">
+            <label className="text-white mb-1">Rooms</label>
+            <input
+                type="number"
+                className="form-control bg-dark text-white"
+                placeholder="Filter by rooms..."
+                value={roomFilter}
+                onChange={e => setRoomFilter(e.target.value)}
+            />
+        </div>
+    </div>
+
+    {/* Parking and Furnished Filters */}
+    <div className="row justify-content-center mt-2">
+        {/* Parking Filter */}
+        <div className="col-auto">
+            <label className="text-white px-2">Parking?</label>
+            <input
+                type="checkbox"
+                className="form-check-input ml-2"
+                id="parkingFilter"
+                checked={parkingFilter}
+                onChange={e => setParkingFilter(e.target.checked)}
+            />
+        </div>
+
+        {/* Furnished Filter */}
+        <div className="col-auto">
+            <label className="text-white px-2">Furnished?</label>
+            <input
+                type="checkbox"
+                className="form-check-input ml-2"
+                id="furnishedFilter"
+                checked={furnishedFilter}
+                onChange={e => setFurnishedFilter(e.target.checked)}
+            />
+        </div>
+    </div>
+</div>
+
+        
+        <div className="container">
+            <div className="row">
+                {data && data.length > 0 ? (
+                    (priceFilter || cityFilter || roomFilter || parkingFilter || furnishedFilter) ?
+                        filteredData.map((item, index) => (
+                            <div key={index} className="col-sm-6 col-md-4 col-lg-3 mb-4">
+                                <div className="card h-100 border-primary">
+                                    {item.bildeListe && item.bildeListe.length > 0 && (
+                                        <img
+                                            src={`http://localhost:11569${item.bildeListe[0].bilderUrl}`}
+                                            className="card-img-top"
+                                            alt="House"
+                                        />
+                                    )}
+                                    <div className="card-body d-flex flex-column">
+                                        <h5 className="card-title">Price: {item.pris}</h5>
+                                        <p className="card-text">{item.beskrivelse}</p>
+                                        <button className="btn btn-primary mt-auto" onClick={()=> detailClick(item.husId)}>Details</button>
                                     </div>
-                                )}
+                                </div>
                             </div>
-                        </div>
-                    </section> 
-                </Fragment>   
+                        )) :
+                        data.map((item, index) => (
+                            <div key={index} className="col-sm-6 col-md-4 col-lg-3 mb-4">
+                                <div className="card h-100 border-primary">
+                                    {item.bildeListe && item.bildeListe.length > 0 && (
+                                        <img
+                                            src={`http://localhost:11569${item.bildeListe[0].bilderUrl}`}
+                                            className="card-img-top"
+                                            alt="House"
+                                        />
+                                    )}
+                                    <div className="card-body d-flex flex-column">
+                                        <h5 className="card-title">Price: {item.pris}</h5>
+                                        <p className="card-text">{item.beskrivelse}</p>
+                                        <button className="btn btn-primary mt-auto" onClick={()=> detailClick(item.husId)}>Details</button>
+                                    </div>
+                                </div>
+                            </div>
+                        ))
+                ) : (
+                    <div className="col-12">
+                        <p className="text-center">No data found...</p>
+                    </div>
+                )}
+            </div>
+        </div>
+    </section> 
+</Fragment> 
             }
 
             {/* Modal for delete confirmation */}
