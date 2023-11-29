@@ -15,6 +15,7 @@ import LagOrdre from './Components/pages/Ordre/lagOrdre';
 import slettKunde from './Components/pages/kunde/slettKunde';
 import Register from './Components/pages/Innlogging/Register';
 import LoggInn from './Components/pages/Innlogging/LoggInn';
+import UserProtectedRoute from './Components/pages/userprotectedRoute';
 import MyProfile from './Components/pages/Innlogging/myProfile';
 import { AuthProvider } from './AuthContext';
 import MyOrders from './Components/pages/Innlogging/myOrders';
@@ -22,53 +23,62 @@ import MyHouses from './Components/pages/Innlogging/myHouses';
 import Kvittering from './Components/pages/Ordre/Kvittering';
 import EndreOrdre from './Components/pages/Ordre/endreOrdre';
 import EndreHus from './Components/pages/Hus/endreHus';
+import ProtectedRoute from './Components/pages/protectedRoute';
 import './App.css'
 
 
 
 
 
-const App = () => {
-
-  
-
-
+const AppWrapper = () => {
   return (
-    
-    <BrowserRouter>
     <AuthProvider>
-    <div className='full-height-container'>
-  <Routes>
-    
-    <Route path="/" element={<Layout />}>
-    <Route path="Innlogging/Register" element={<Register />} />
-    <Route path="Innlogging/myOrders" element={<MyOrders />} />
-    <Route path="Innlogging/myHouses" element={<MyHouses />} />
-    <Route path="Innlogging/MyProfile" element={<MyProfile />} />
-    <Route path="Innlogging/LoggInn" element={<LoggInn />} />
-    <Route path="Innlogging/Register" element={<Register />} />
-      <Route index element={<HusTabell type="Grid" />} />
-      <Route path="husTabell" element={<HusTabell type="Tabell" />} />
-      <Route path='endreHus' element={<EndreHus/>} />
-      <Route path="oversikt/:husId" element={<Oversikt />} />
-      <Route path="lagOrdre/:husId/:pris" element={<LagOrdre />} />
-      <Route path ="/Kvittering/:ordreId" element={<Kvittering/>}/>
-      <Route path="/kundeTabell" element={<KundeTabell />} />
-      <Route path="eierTabell" element={<EierTabell />} />
-      <Route path='/kunde/slettKunde/:husId' element={<slettKunde/>} />
-      <Route path="personTabell" element={<PersonTabell />} />
-      <Route path="ordreTabell" element={<OrdreTabell />} />
-      <Route path="endreOrdre" element={<EndreOrdre />} />
-      <Route path="listHus" element={<ListHus />} />
-    </Route>
-    
-  </Routes>
-  </div>
-  </AuthProvider>
-</BrowserRouter>
-
-
+      <App />
+    </AuthProvider>
   );
 };
 
-export default App;
+const App = () => {
+  const { user } = useContext(AuthContext);
+
+  return (
+    <BrowserRouter>
+      <div className='full-height-container'>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route path="Innlogging/Register" element={<Register />} />
+            <Route path="Innlogging/LoggInn" element={<LoggInn />} />
+            <Route index element={<HusTabell type="Grid" />} />
+            <Route path="oversikt/:husId" element={<Oversikt />} />
+
+            {/* User Protected Routes */}
+            <Route element={<UserProtectedRoute />}>
+              <Route path="/Innlogging/MyOrders" element={<MyOrders />} />
+              <Route path="/Innlogging/MyHouses" element={<MyHouses />} />
+              <Route path="/Innlogging/MyProfile" element={<MyProfile />} />
+              <Route path="/lagOrdre/:husId/:pris" element={<LagOrdre />} />
+              <Route path="/Kvittering/:ordreId" element={<Kvittering />} />
+              <Route path="/listHus" element={<ListHus />} />
+            </Route>
+
+            {user && user.role === 'admin' && (
+            <Route element={<ProtectedRoute />}>
+              <Route path="/husTabell" element={<HusTabell />} />
+              <Route path="/endreHus" element={<EndreHus />} />
+              <Route path="/kundeTabell" element={<KundeTabell />} />
+              <Route path="/personTabell" element={<PersonTabell />} />
+              <Route path="/ordreTabell" element={<OrdreTabell />} />
+              <Route path="/eierTabell" element={<EierTabell />} />
+            </Route>
+            )}
+            {/* Other Routes */}
+            <Route path="/kunde/slettKunde/:husId" element={<slettKunde />} />
+            <Route path="/endreOrdre" element={<EndreOrdre />} />
+          </Route>
+        </Routes>
+      </div>
+    </BrowserRouter>
+  );
+};
+
+export default AppWrapper;

@@ -132,10 +132,9 @@ const HusTabell = (props) => {
                 <Fragment>
     <section>
     <h1 className="text-center display-4 py-2 mb-4 bg-dark text-white">Welcome</h1>
-    <div className="mb-3 text-center border border-white p-3">
-    <h5 className="text-white mb-4">Filter:</h5>
+    <div className="mb-3 text-center">
     <div className="row justify-content-center">
-        {/* Price Filter */}
+       
         <div className="col-2">
             <label className="text-white mb-1">Price</label>
             <input
@@ -147,7 +146,7 @@ const HusTabell = (props) => {
             />
         </div>
 
-        {/* City Filter */}
+       
         <div className="col-2">
             <label className="text-white mb-1">City</label>
             <input
@@ -159,7 +158,7 @@ const HusTabell = (props) => {
             />
         </div>
 
-        {/* Area (Rooms) Filter */}
+        
         <div className="col-2">
             <label className="text-white mb-1">Rooms</label>
             <input
@@ -172,7 +171,7 @@ const HusTabell = (props) => {
         </div>
     </div>
 
-    {/* Parking and Furnished Filters */}
+   
     <div className="row justify-content-center mt-2">
         {/* Parking Filter */}
         <div className="col-auto">
@@ -186,7 +185,7 @@ const HusTabell = (props) => {
             />
         </div>
 
-        {/* Furnished Filter */}
+       
         <div className="col-auto">
             <label className="text-white px-2">Furnished?</label>
             <input
