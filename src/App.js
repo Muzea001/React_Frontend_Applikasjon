@@ -24,6 +24,7 @@ import Kvittering from './Components/pages/Ordre/Kvittering';
 import EndreOrdre from './Components/pages/Ordre/endreOrdre';
 import EndreHus from './Components/pages/Hus/endreHus';
 import ProtectedRoute from './Components/pages/protectedRoute';
+import { logout } from './AuthService';
 import './App.css'
 
 
@@ -48,6 +49,7 @@ const App = () => {
           <Route path="/" element={<Layout />}>
             <Route path="Innlogging/Register" element={<Register />} />
             <Route path="Innlogging/LoggInn" element={<LoggInn />} />
+            
             <Route index element={<HusTabell type="Grid" />} />
             <Route path="oversikt/:husId" element={<Oversikt />} />
 

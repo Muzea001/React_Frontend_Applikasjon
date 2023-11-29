@@ -6,12 +6,14 @@ import { AuthContext } from '../../AuthContext';
 import { logout } from '../../AuthService';
 import { useNavigate } from 'react-router-dom';
 const Header = () => {
-  const { user } = useContext(AuthContext);
+  const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
-  const handleLogout = async() => {
-   await  logout(user);
-   navigate('/');
-  }
+
+  
+  const handleLogout = async () => {
+    await logout();
+    navigate('/'); 
+  };
   return (
     <header>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
