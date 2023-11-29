@@ -116,7 +116,7 @@ const EndreHus = () => {
                                 <label className="form-check-label text-white" htmlFor="adresse">Address<span className="text-danger">*</span></label>
                                 <div className="mb-3">
                                     <input type="text"
-                                        id="adresse"
+                                        id="addresse"
                                         className="form-control"
                                         value={husData.addresse}
                                         onChange={handleInputChange}
