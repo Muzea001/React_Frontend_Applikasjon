@@ -38,12 +38,22 @@ const LoggInn = () => {
       const body = JSON.stringify({ email, password, rememberMe });
       const response = await axios.post('http://localhost:11569/api/Bruker/LoggInn', body, config);
   
-      if (response.status === 200) {
-        setUser({ email: email, isAuthenticated: true });
-        navigate('/');
-      } else {
-        setError('Login failed. No response data.');
-      }
+            if (response.status === 200) {
+              
+              let role;
+              if (email === "Admin@gmail.com") {
+                role = "Admin";
+              } else if (email === "Jonas13@gmail.com") {
+                role = "User";
+              } else {
+                role = "User"; 
+              }
+
+              setUser({ email: email, role: role, isAuthenticated: true });
+              navigate('/');
+            } else {
+              setError('Login failed. No response data.');
+            }
   
     } catch (err) {
       console.error(err.response ? err.response.data : err); 
