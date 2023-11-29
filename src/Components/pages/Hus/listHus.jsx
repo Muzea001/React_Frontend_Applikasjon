@@ -89,9 +89,9 @@ const ListHus = () => {
                         <div className="col-md-6">
                             <h1 className="text-center display-4 py-2 mb-4 bg-dark text-white">List a new House</h1>
                             <form onSubmit={handleSubmit}>
-                                <label className="form-check-label text-white" htmlFor="pris">
+                                <label className="form-check-label text-white" htmlFor="pris" >
                                     Price
-                                </label>
+                                    <span className="text-danger">*</span></label>
                                 <input
                                     type="number"
                                     className="form-control"
@@ -102,7 +102,9 @@ const ListHus = () => {
                                     step="0.01"
                                     required
                                 />
-                                <label className="form-check-label text-white" htmlFor="romAntall">Number of Rooms</label>
+                                <label className="form-check-label text-white" htmlFor="romAntall">
+                                    Number of Rooms
+                                    <span className="text-danger">*</span></label>
                                 <input
                                     type="number"
                                     className="form-control"
@@ -118,7 +120,7 @@ const ListHus = () => {
                                 />
                                 <label className="form-check-label text-white" htmlFor="Adress">
                                     Address
-                                </label>
+                                <span className="text-danger">*</span></label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -131,7 +133,7 @@ const ListHus = () => {
 
                                 <label className="form-check-label text-white" htmlFor="by">
                                     City
-                                </label>
+                                <span className="text-danger">*</span></label>
                                 <input
                                     type="text"
                                     className="form-control"
@@ -166,7 +168,7 @@ const ListHus = () => {
                                 </div>
                                 <label className="form-check-label text-white" htmlFor="eierKontoNummer">
                                     Owner Account Number
-                                </label>
+                                <span className="text-danger">*</span></label>
                                 <div className="mb-3">
                                     <input
                                         type="number"
@@ -181,7 +183,7 @@ const ListHus = () => {
 
                                 <label className="form-check-label text-white" htmlFor="harParkering">
                                     Size in m<sup>2</sup>
-                                </label>
+                                <span className="text-danger">*</span></label>
                                 <div className="mb-3">
                                     <input
                                         type="number"
