@@ -26,10 +26,10 @@ const HusTabell = (props) => {
     useEffect(() => {
         const filtered = data.filter(item => {
             return (priceFilter ? item.pris <= priceFilter : true) &&
-                   (cityFilter ? item.by.toLowerCase().includes(cityFilter.toLowerCase()) : true) &&
-                   (roomFilter ? item.romAntall === parseInt(roomFilter, 10) : true) &&
-                   (!parkingFilter || item.harParkering === parkingFilter) &&
-                   (!furnishedFilter || item.erMoblert === furnishedFilter);
+                (cityFilter ? item.by.toLowerCase().includes(cityFilter.toLowerCase()) : true) &&
+                (roomFilter ? item.romAntall === parseInt(roomFilter, 10) : true) &&
+                (!parkingFilter || item.harParkering === parkingFilter) &&
+                (!furnishedFilter || item.erMoblert === furnishedFilter);
         });
         setFilteredData(filtered);
     }, [data, priceFilter, cityFilter, roomFilter, parkingFilter, furnishedFilter]);
@@ -49,7 +49,7 @@ const HusTabell = (props) => {
     }
 
     const handleEditClick = (husId) => {
-        navigate('/endreHus', { state: { husId } }); 
+        navigate('/endreHus', { state: { husId } });
     };
 
     const handleDeleteClick = (husId) => {
@@ -80,7 +80,7 @@ const HusTabell = (props) => {
     };
 
     return (
-      <div className="full-height-container bg-dark">
+        <div className="full-height-container bg-dark">
             {props.type === "Tabell" ?
                 <Fragment>
                     <section>
@@ -110,9 +110,9 @@ const HusTabell = (props) => {
                                                 )}
                                             </td>
                                             <td>
-                                            <button className="btn btn-primary" onClick={() => handleEditClick(item.husId)}>Edit</button>
-                                                <button 
-                                                    className="btn btn-danger" 
+                                                <button className="btn btn-primary" onClick={() => handleEditClick(item.husId)}>Edit</button>
+                                                <button
+                                                    className="btn btn-danger"
                                                     onClick={() => handleDeleteClick(item.husId)}>
                                                     Delete
                                                 </button>
@@ -130,125 +130,157 @@ const HusTabell = (props) => {
                 </Fragment>
                 :
                 <Fragment>
-    <section>
-    <h1 className="text-center display-4 py-2 mb-4 bg-dark text-white">Welcome</h1>
-    <div className="mb-3 text-center">
-    <div className="row justify-content-center">
-       
-        <div className="col-2">
-            <label className="text-white mb-1">Price</label>
-            <input
-                type="text"
-                className="form-control bg-dark text-white"
-                placeholder="Filter by price..."
-                value={priceFilter}
-                onChange={e => setPriceFilter(e.target.value)}
-            />
-        </div>
+                    <section>
+                        <h1 className="text-center display-4 py-2 mb-4 bg-dark text-white">Welcome</h1>
+                        <div className="mb-3 text-center">
+                            <div className="row justify-content-center">
 
-       
-        <div className="col-2">
-            <label className="text-white mb-1">City</label>
-            <input
-                type="text"
-                className="form-control bg-dark text-white"
-                placeholder="Filter by city..."
-                value={cityFilter}
-                onChange={e => setCityFilter(e.target.value)}
-            />
-        </div>
+                                <div className="col-2">
+                                    <label className="text-white mb-1">Price</label>
+                                    <input
+                                        type="text"
+                                        className="form-control bg-dark text-white"
+                                        placeholder="Filter by price..."
+                                        value={priceFilter}
+                                        onChange={e => {
+                                            const value = e.target.value;
+                                            // Basic validation: Allow only numbers and decimal points
+                                            if (/^\d*\.?\d*$/.test(value)) {
+                                                setPriceFilter(value);
+                                            }
+                                        }}
+                                    />
 
-        
-        <div className="col-2">
-            <label className="text-white mb-1">Rooms</label>
-            <input
-                type="number"
-                className="form-control bg-dark text-white"
-                placeholder="Filter by rooms..."
-                value={roomFilter}
-                onChange={e => setRoomFilter(e.target.value)}
-            />
-        </div>
-    </div>
+                                </div>
 
-   
-    <div className="row justify-content-center mt-2">
-        {/* Parking Filter */}
-        <div className="col-auto">
-            <label className="text-white px-2">Parking?</label>
-            <input
-                type="checkbox"
-                className="form-check-input ml-2"
-                id="parkingFilter"
-                checked={parkingFilter}
-                onChange={e => setParkingFilter(e.target.checked)}
-            />
-        </div>
 
-       
-        <div className="col-auto">
-            <label className="text-white px-2">Furnished?</label>
-            <input
-                type="checkbox"
-                className="form-check-input ml-2"
-                id="furnishedFilter"
-                checked={furnishedFilter}
-                onChange={e => setFurnishedFilter(e.target.checked)}
-            />
-        </div>
-    </div>
-</div>
+                                <div className="col-2">
+                                    <label className="text-white mb-1">City</label>
+                                    <input
+                                        type="text"
+                                        className="form-control bg-dark text-white"
+                                        placeholder="Filter by city..."
+                                        value={cityFilter}
+                                        onChange={e => {
+                                            const value = e.target.value;
+                                            // Basic validation: Allow alphabetic characters, spaces, hyphens, and apostrophes
+                                            if (/^[a-zA-Z\s-']*$/i.test(value) && value.length <= 50) {
+                                                setCityFilter(value);
+                                            }
+                                        }}
+                                    />
 
-        
-        <div className="container">
-            <div className="row">
-                {data && data.length > 0 ? (
-                    (priceFilter || cityFilter || roomFilter || parkingFilter || furnishedFilter) ?
-                        filteredData.map((item, index) => (
-                            <div key={index} className="col-sm-6 col-md-4 col-lg-3 mb-4">
-                                <div className="card h-100 border-primary">
-                                    {item.bildeListe && item.bildeListe.length > 0 && (
-                                        <img
-                                            src={`http://localhost:11569${item.bildeListe[0].bilderUrl}`}
-                                            className="card-img-top"
-                                            alt="House"
-                                        />
-                                    )}
-                                    <div className="card-body d-flex flex-column">
-                                        <h5 className="card-title">Price: {item.pris}</h5>
-                                        <p className="card-text">{item.beskrivelse}</p>
-                                        <button className="btn btn-primary mt-auto" onClick={()=> detailClick(item.husId)}>Details</button>
-                                    </div>
+                                </div>
+
+
+                                <div className="col-2">
+                                    <label className="text-white mb-1">Rooms</label>
+                                    <input
+                                        type="number"
+                                        className="form-control bg-dark text-white"
+                                        placeholder="Filter by rooms..."
+                                        value={roomFilter}
+                                        onChange={e => {
+                                            const value = e.target.value;
+
+                                            // Allow the field to be empty to enable editing
+                                            if (value === '') {
+                                                setRoomFilter(value);
+                                            } else {
+                                                // Convert the input value to an integer
+                                                const intValue = parseInt(value, 10); // Base 10 for decimal numbers
+
+                                                // Basic validation: Check if the value is a number and within the specified range (1-20)
+                                                if (!isNaN(intValue) && intValue > 0 && intValue <= 20) {
+                                                    setRoomFilter(intValue);
+                                                }
+                                            }
+                                        }}
+                                    />
+
+
+
                                 </div>
                             </div>
-                        )) :
-                        data.map((item, index) => (
-                            <div key={index} className="col-sm-6 col-md-4 col-lg-3 mb-4">
-                                <div className="card h-100 border-primary">
-                                    {item.bildeListe && item.bildeListe.length > 0 && (
-                                        <img
-                                            src={`http://localhost:11569${item.bildeListe[0].bilderUrl}`}
-                                            className="card-img-top"
-                                            alt="House"
-                                        />
-                                    )}
-                                    <div className="card-body d-flex flex-column">
-                                        <h5 className="card-title">Price: {item.pris}</h5>
-                                        <p className="card-text">{item.beskrivelse}</p>
-                                        <button className="btn btn-primary mt-auto" onClick={()=> detailClick(item.husId)}>Details</button>
-                                    </div>
+
+
+                            <div className="row justify-content-center mt-2">
+                                {/* Parking Filter */}
+                                <div className="col-auto">
+                                    <label className="text-white px-2">Parking?</label>
+                                    <input
+                                        type="checkbox"
+                                        className="form-check-input ml-2"
+                                        id="parkingFilter"
+                                        checked={parkingFilter}
+                                        onChange={e => setParkingFilter(e.target.checked)}
+                                    />
+                                </div>
+
+
+                                <div className="col-auto">
+                                    <label className="text-white px-2">Furnished?</label>
+                                    <input
+                                        type="checkbox"
+                                        className="form-check-input ml-2"
+                                        id="furnishedFilter"
+                                        checked={furnishedFilter}
+                                        onChange={e => setFurnishedFilter(e.target.checked)}
+                                    />
                                 </div>
                             </div>
-                        ))
-                ) : (
-                    <div className="col-12">
-                        <p className="text-center">No data found...</p>
-                    </div>
-                )}
-            </div>
-        </div>
-    </section> 
-</Fragment> 
+                        </div>
+
+
+                        <div className="container">
+                            <div className="row">
+                                {data && data.length > 0 ? (
+                                    (priceFilter || cityFilter || roomFilter || parkingFilter || furnishedFilter) ?
+                                        filteredData.map((item, index) => (
+                                            <div key={index} className="col-sm-6 col-md-4 col-lg-3 mb-4">
+                                                <div className="card h-100 border-primary">
+                                                    {item.bildeListe && item.bildeListe.length > 0 && (
+                                                        <img
+                                                            src={`http://localhost:11569${item.bildeListe[0].bilderUrl}`}
+                                                            className="card-img-top"
+                                                            alt="House"
+                                                        />
+                                                    )}
+                                                    <div className="card-body d-flex flex-column">
+                                                        <h5 className="card-title">Price: {item.pris}</h5>
+                                                        <p className="card-text">{item.beskrivelse}</p>
+                                                        <button className="btn btn-primary mt-auto" onClick={() => detailClick(item.husId)}>Details</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        )) :
+                                        data.map((item, index) => (
+                                            <div key={index} className="col-sm-6 col-md-4 col-lg-3 mb-4">
+                                                <div className="card h-100 border-primary">
+                                                    {item.bildeListe && item.bildeListe.length > 0 && (
+                                                        <img
+                                                            src={`http://localhost:11569${item.bildeListe[0].bilderUrl}`}
+                                                            className="card-img-top"
+                                                            alt="House"
+                                                        />
+                                                    )}
+                                                    <div className="card-body d-flex flex-column">
+                                                        <h5 className="card-title">Price: {item.pris}</h5>
+                                                        <p className="card-text">{item.beskrivelse}</p>
+                                                        <button className="btn btn-primary mt-auto" onClick={() => detailClick(item.husId)}>Details</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        ))
+                                ) : (
+                                    <div className="col-12">
+                                        <p className="text-center">No data found...</p>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </section>
+                </Fragment>
             }
 
             {/* Modal for delete confirmation */}
@@ -257,14 +289,14 @@ const HusTabell = (props) => {
                     <Modal.Title>Delete Confirmation</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    {deleteErrorMessage ? 
-                        <div className="alert alert-danger">{deleteErrorMessage}</div> : 
+                    {deleteErrorMessage ?
+                        <div className="alert alert-danger">{deleteErrorMessage}</div> :
                         `Are you sure you want to delete the house with the ID ${selectedHusId}?`}
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleCloseModal}>Cancel</Button>
-                    {deleteErrorMessage ? 
-                        <Button variant="primary" onClick={() => setDeleteErrorMessage('')}>Close</Button> : 
+                    {deleteErrorMessage ?
+                        <Button variant="primary" onClick={() => setDeleteErrorMessage('')}>Close</Button> :
                         <Button variant="danger" onClick={handleConfirmDelete}>Confirm</Button>}
                 </Modal.Footer>
             </Modal>
