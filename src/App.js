@@ -63,14 +63,17 @@ const App = () => {
               <Route path="/listHus" element={<ListHus />} />
             </Route>
 
-            {user && user.role === 'admin' && (
+            {user && user.role === 'Admin' && (
             <Route element={<ProtectedRoute />}>
-              <Route path="/husTabell" element={<HusTabell />} />
+              <Route path="/husTabell" element={<HusTabell type="Tabell" />} />
               <Route path="/endreHus" element={<EndreHus />} />
               <Route path="/kundeTabell" element={<KundeTabell />} />
               <Route path="/personTabell" element={<PersonTabell />} />
               <Route path="/ordreTabell" element={<OrdreTabell />} />
               <Route path="/eierTabell" element={<EierTabell />} />
+              <Route path="/listHus" element={<ListHus />} />
+              <Route path="/lagOrdre/:husId/:pris" element={<LagOrdre />} />
+              <Route path="/Kvittering/:ordreId" element={<Kvittering />} />
             </Route>
             )}
             {/* Other Routes */}
