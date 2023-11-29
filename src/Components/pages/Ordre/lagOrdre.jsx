@@ -73,6 +73,14 @@ const LagOrdre = () => {
     }
   };
 
+  const homeClick = () => {
+        
+    try {
+      navigate(`/`);
+    } catch (error) {
+      console.error('Navigation error:', error);
+    }
+  };
 
   const checkAvailability = async () => {
     try {
@@ -190,7 +198,7 @@ const LagOrdre = () => {
                   {submitButtonVisible && (
                     <button type="submit" className="btn btn-primary mb-2">Create Order</button>
                   )}
-                  <button type="button" className="btn btn-secondary">Back to Table View</button>
+                  <button type="button" className="btn btn-secondary" onClick={homeClick}>Back to Table View</button>
                 </div>
 
               </form>
