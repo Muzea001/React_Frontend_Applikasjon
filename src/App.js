@@ -24,6 +24,7 @@ import Kvittering from './Components/pages/Ordre/Kvittering';
 import EndreOrdre from './Components/pages/Ordre/endreOrdre';
 import EndreHus from './Components/pages/Hus/endreHus';
 import ProtectedRoute from './Components/pages/protectedRoute';
+import UserOrAdminProtectedRoute from './Components/pages/userOrAdminProtectedRoute';
 import { logout } from './AuthService';
 import './App.css'
 
@@ -53,14 +54,14 @@ const App = () => {
             <Route index element={<HusTabell type="Grid" />} />
             <Route path="oversikt/:husId" element={<Oversikt />} />
 
-            {/* User Protected Routes */}
+           
             <Route element={<UserProtectedRoute />}>
               <Route path="/Innlogging/MyOrders" element={<MyOrders />} />
               <Route path="/Innlogging/MyHouses" element={<MyHouses />} />
               <Route path="/Innlogging/MyProfile" element={<MyProfile />} />
               <Route path="/lagOrdre/:husId/:pris" element={<LagOrdre />} />
               <Route path="/Kvittering/:ordreId" element={<Kvittering />} />
-              <Route path="/listHus" element={<ListHus />} />
+              
             </Route>
 
             {user && user.role === 'Admin' && (
@@ -71,12 +72,17 @@ const App = () => {
               <Route path="/personTabell" element={<PersonTabell />} />
               <Route path="/ordreTabell" element={<OrdreTabell />} />
               <Route path="/eierTabell" element={<EierTabell />} />
-              <Route path="/listHus" element={<ListHus />} />
+              
               <Route path="/lagOrdre/:husId/:pris" element={<LagOrdre />} />
               <Route path="/Kvittering/:ordreId" element={<Kvittering />} />
             </Route>
             )}
-            {/* Other Routes */}
+
+            <Route element={<UserOrAdminProtectedRoute />}>
+                <Route path="/listHus" element={<ListHus />} />
+               
+            </Route>
+            
             <Route path="/kunde/slettKunde/:husId" element={<slettKunde />} />
             <Route path="/endreOrdre" element={<EndreOrdre />} />
           </Route>
